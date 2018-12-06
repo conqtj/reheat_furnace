@@ -21,22 +21,22 @@ internalField   uniform 0;
 
 boundaryField
 {
-    box
+    billet
     {
         type            compressible::alphatWallFunction;
         value           uniform 0;
     }
-    floor
+    walls
     {
         type            compressible::alphatWallFunction;
         value           uniform 0;
     }
-    ceiling
+    burner
     {
         type            compressible::alphatWallFunction;
         value           uniform 0;
     }
-    fixedWalls
+    exhaust
     {
         type            compressible::alphatWallFunction;
         value           uniform 0;

@@ -20,24 +20,24 @@ internalField   uniform 300;
 
 boundaryField
 {
-    floor
+    billet
     {
         type            fixedValue;
         value           uniform 300.0;
     }
 
-    ceiling
+    walls
     {
         type            fixedValue;
         value           uniform 300.0;
     }
 
-    fixedWalls
+    burner
     {
         type            zeroGradient;
     }
 
-    box
+    exhaust
     {
         type            fixedValue;
         value           uniform 500.0;

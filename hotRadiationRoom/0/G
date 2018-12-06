@@ -20,7 +20,7 @@ internalField   uniform 0;
 
 boundaryField
 {
-    floor
+    billet
     {
         type            MarshakRadiation;
         emissivityMode  lookup;
@@ -28,7 +28,7 @@ boundaryField
         value           uniform 0;
     }
 
-    fixedWalls
+    walls
     {
         type            MarshakRadiation;
         emissivityMode  lookup;
@@ -36,7 +36,7 @@ boundaryField
         value           uniform 0;
     }
 
-    ceiling
+    burner
     {
         type            MarshakRadiation;
         emissivityMode  lookup;
@@ -44,7 +44,7 @@ boundaryField
         value           uniform 0;
     }
 
-    box
+    exhaust
     {
         type            MarshakRadiation;
         emissivityMode  lookup;

@@ -21,22 +21,22 @@ internalField   uniform 0.1;
 
 boundaryField
 {
-    box
+    billet
     {
         type            kqRWallFunction;
         value           uniform 0.1;
     }
-    floor
+    walls
     {
         type            kqRWallFunction;
         value           uniform 0.1;
     }
-    ceiling
+    burner
     {
         type            kqRWallFunction;
         value           uniform 0.1;
     }
-    fixedWalls
+    exhaust
     {
         type            kqRWallFunction;
         value           uniform 0.1;

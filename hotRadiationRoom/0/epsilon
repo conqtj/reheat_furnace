@@ -21,22 +21,22 @@ internalField   uniform 0.01;
 
 boundaryField
 {
-    box
+    billet
     {
         type            epsilonWallFunction;
         value           uniform 0.01;
     }
-    floor
+    walls
     {
         type            epsilonWallFunction;
         value           uniform 0.01;
     }
-    ceiling
+    burner
     {
         type            epsilonWallFunction;
         value           uniform 0.01;
     }
-    fixedWalls
+    exhaust
     {
         type            epsilonWallFunction;
         value           uniform 0.01;

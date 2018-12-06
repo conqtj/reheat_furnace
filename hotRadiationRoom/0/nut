@@ -21,22 +21,22 @@ internalField   uniform 0;
 
 boundaryField
 {
-    box
+    billet
     {
         type            nutkWallFunction;
         value           uniform 0;
     }
-    floor
+    walls
     {
         type            nutkWallFunction;
         value           uniform 0;
     }
-    ceiling
+    burner
     {
         type            nutkWallFunction;
         value           uniform 0;
     }
-    fixedWalls
+    exhaust
     {
         type            nutkWallFunction;
         value           uniform 0;

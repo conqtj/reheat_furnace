@@ -20,25 +20,25 @@ internalField   uniform 100000;
 
 boundaryField
 {
-    floor
+    billet
     {
         type            calculated;
         value           $internalField;
     }
 
-    ceiling
+    walls
     {
         type            calculated;
         value           $internalField;
     }
 
-    fixedWalls
+    burner
     {
         type            calculated;
         value           $internalField;
     }
 
-    box
+    exhaust
     {
         type            calculated;
         value           $internalField;

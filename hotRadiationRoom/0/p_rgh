@@ -20,25 +20,25 @@ internalField   uniform 100000;
 
 boundaryField
 {
-    floor
+    billet
     {
         type            fixedFluxPressure;
         value           uniform 100000;
     }
 
-    ceiling
+    walls
     {
         type            fixedFluxPressure;
         value           uniform 100000;
     }
 
-    fixedWalls
+    burner
     {
         type            fixedFluxPressure;
         value           uniform 100000;
     }
 
-    box
+    exhaust
     {
         type            fixedFluxPressure;
         value           uniform 100000;

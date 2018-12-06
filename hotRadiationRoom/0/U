@@ -20,22 +20,22 @@ internalField   uniform (0 0 0);
 
 boundaryField
 {
-    floor
+    billet
     {
         type            noSlip;
     }
 
-    ceiling
+    walls
     {
         type            noSlip;
     }
 
-    fixedWalls
+    burner
     {
         type            noSlip;
     }
 
-    box
+    exhaust
     {
         type            noSlip;
     }

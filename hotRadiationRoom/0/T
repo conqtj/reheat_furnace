@@ -22,19 +22,19 @@ boundaryField
 {
     billet
     {
-        type            fixedValue;
+        type            codedFixedValue;
         value           uniform 300.0;
     }
 
     walls
     {
-        type            fixedValue;
-        value           uniform 300.0;
+        type            zeroGradient;
     }
 
     burner
     {
-        type            zeroGradient;
+        type            fixedValue;
+        value           uniform 2000.0;
     }
 
     exhaust

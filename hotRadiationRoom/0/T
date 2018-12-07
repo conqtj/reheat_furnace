@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 0 0 1 0 0 0];
 
-internalField   uniform 300;
+internalField   uniform 1150;
 
 boundaryField
 {
@@ -24,6 +24,36 @@ boundaryField
     {
         type            codedFixedValue;
         value           uniform 300.0;
+        
+        redirectType    ebillet;
+        
+        codeOptions
+        #{
+            -I$(LIB_SRC)/finiteVolume/lnInclude \
+            -I$(LIB_SRC)/meshTools/lnInclude
+        #};
+        
+        codeInclude
+        #{
+            #include "fvCFD.H"
+            #include <cmath>
+            #include <iostream>
+        #};
+        
+        code
+        #{
+            const fvPatch& boundaryPatch = patch();
+            const vectorField& Cf = boundaryPatch.Cf();
+            vectorField& field = *this;
+            
+            scalar To = 1400, Ti = 300, Tg = 2000;
+            scalar C = log((Tg-Ti)/(Tg-To)), L1 = 16.0;
+            
+            forAll(Cf, faceI)
+            {
+              field[faceI] = Tg - (Tg-Ti)*exp(-C*Cf[faceI].x()/L1);
+            }
+        #};
     }
 
     walls
@@ -31,7 +61,13 @@ boundaryField
         type            zeroGradient;
     }
 
-    burner
+    burner_1
+    {
+        type            fixedValue;
+        value           uniform 2000.0;
+    }
+
+    burner_2
     {
         type            fixedValue;
         value           uniform 2000.0;
@@ -39,8 +75,7 @@ boundaryField
 
     exhaust
     {
-        type            fixedValue;
-        value           uniform 500.0;
+        type            zeroGradient;
     }
 }
 

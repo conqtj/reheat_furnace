@@ -30,14 +30,29 @@ boundaryField
         type            noSlip;
     }
 
-    burner
+    burner_1
     {
-        type            noSlip;
+        type                flowRateInletVelocity;
+        massFlowRate        0.25*15;
+        extrapolateProfile  yes;
+        rho                 rho;
+        rhoInlet            1.0;
+        value               uniform (0 0 0);
     }
-
+    
+    burner_2
+    {
+        type                flowRateInletVelocity;
+        massFlowRate        0.15*9;
+        extrapolateProfile  yes;
+        rho                 rho;
+        rhoInlet            1.0;
+        value               uniform (0 0 0);
+    }
+    
     exhaust
     {
-        type            noSlip;
+        type            zeroGradient;
     }
 }
 

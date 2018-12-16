@@ -44,7 +44,7 @@ boundaryField
         #{
             const fvPatch& boundaryPatch = patch();
             const vectorField& Cf = boundaryPatch.Cf();
-            vectorField& field = *this;
+            scalarField& field = *this;
             
             scalar To = 1400, Ti = 300, Tg = 2000, L1 = 16.0;
             scalar C = log((Tg-Ti)/(Tg-To));

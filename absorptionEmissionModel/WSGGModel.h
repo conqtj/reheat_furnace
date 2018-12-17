@@ -18,16 +18,30 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 Class
-    Foam::radiation::kDistModel
+    Foam::radiation::WSGGModel
 Description
-    Class for generation of k-distribution and other related parameters such as
-    a-functions and scaling factors
+    Class for constructing the weighted sum of gray gases model for inhomogeneous
+    medium and wall reflection
+    e=sum[ai(T){1-exp(-kiPas)}]
+    this coefficients satisfy a range of path lengths and temperatures values
+ 
+    Ref: Smith, Shen and Friedman 1982
+
+    Only the weights ai(T) are allowed to vary with temperature
+    ai=sum{cij(T/Tref)^j-1}    j=0->3
+
+    Three grey gases and one transparent gas
+    Gas number zero is the transperernt gas
+
+    The planck mean absorption coefficient is used for particles, which is 
+    added to the WSGG absorption coefficient
+    The planck mean coefficients scales linearly with number of particles.
 SourceFiles
-    kDistModel.C
+    WSGGModel.C
 \*---------------------------------------------------------------------------*/
 
-#ifndef kDistModel_H
-#define kDistModel_H
+#ifndef WSGGModel_H
+#define WSGGModel_H
 
 #include "absorptionEmissionModel.H"
 #include "fluidThermo.H"
@@ -42,31 +56,27 @@ namespace radiation
 {
 
 /*---------------------------------------------------------------------------*\
-                  Class kDistModel Declaration
+                  Class WSGGModel Declaration
 \*---------------------------------------------------------------------------*/
 
-class kDistModel
+class WSGGModel
 :
     public absorptionEmissionModel
 {
 private:
 
     // Private data
-    label nop;
-    scalar dlmn[4][4][4];
-    scalar almn[4][4][4];
-    scalar blmn[3][3][2];
-
-    scalarList *k1,*k2;
-    scalar kmin, kmax;
+    scalar KG[4];
+    scalar bij[3][4];
+    scalar CAijk[3][4][4];
 
     //Maths Variable 
-        label Nq;
-        // g is the quadrature point and w is the weight
-        scalarList w, g;
+    label Nq;
+    //w is the weight
+    scalarList w;
 
     //reference state of the gas
-    scalar Tp,XCO2p,XH2Op;
+    scalar Tref;
     
     //- Thermo package
     const fluidThermo& thermo_;
@@ -74,27 +84,21 @@ private:
     //functions
         //Read Data
         void readData();
-        //Set Reference
-        void setRefState();
-        //kDist Functions
-        scalarList aFunction(const scalarList&, const scalarList&, label);
-        scalarList fskdistmix(scalar,scalar,scalar,scalar,const scalarList&,label);
-        scalar fskDco2(scalar, scalar, scalar);
-        scalar fskDh2o(scalar, scalar, scalar, scalar);
+        //Access Function
         scalarList getw();
 
 public:
 
     //- Runtime type information
-    TypeName("kDistModel");
+    TypeName("WSGGModel");
 
 
     // Constructors
-    kDistModel(const dictionary& dict, const fvMesh& mesh);
+    WSGGModel(const dictionary& dict, const fvMesh& mesh);
 
 
     //- Destructor
-    virtual ~kDistModel();
+    virtual ~WSGGModel();
 
 
     //- Absorption coefficient for continuous phase

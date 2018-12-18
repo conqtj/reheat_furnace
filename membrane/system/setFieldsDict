@@ -11,45 +11,18 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "system";
-    object      controlDict;
+    object      setFieldsDict;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     reactingFoam;
+defaultFieldValues
+(
+    volScalarFieldValue H2O 0.2
+    volScalarFieldValue N2 0.7
+    volScalarFieldValue CO2 0.1
+);
 
-startFrom       startTime;
-
-startTime       0;
-
-stopAt          endTime;
-
-endTime         0.1;
-
-deltaT          1e-3;
-
-writeControl    adjustableRunTime;
-
-writeInterval   0.01;
-
-purgeWrite      0;
-
-writeFormat     ascii;
-
-writePrecision  6;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable true;
-
-adjustTimeStep  yes;
-
-maxCo           1;
-
-libs            ( "libsemiPermeableBaffle.so" );
-
+regions
+();
 
 // ************************************************************************* //

@@ -11,24 +11,11 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      chemistryProperties;
+    object      combustionProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-chemistryType
-{
-    solver            EulerImplicit;
-}
-
-chemistry           off;
-
-initialChemicalTimeStep 1e-07;
-
-EulerImplicitCoeffs
-{
-    cTauChem        1;
-    equilibriumRateLimiter off;
-}
+combustionModel  none;
 
 
 // ************************************************************************* //

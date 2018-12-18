@@ -11,24 +11,28 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      chemistryProperties;
+    object      thermophysicalProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-chemistryType
+thermoType
 {
-    solver            EulerImplicit;
+    type            hePsiThermo;
+    mixture         reactingMixture;
+    transport       sutherland;
+    thermo          janaf;
+    energy          sensibleEnthalpy;
+    equationOfState perfectGas;
+    specie          specie;
 }
 
-chemistry           off;
+inertSpecie N2;
 
-initialChemicalTimeStep 1e-07;
+chemistryReader foamChemistryReader;
 
-EulerImplicitCoeffs
-{
-    cTauChem        1;
-    equilibriumRateLimiter off;
-}
+foamChemistryFile "$FOAM_CASE/constant/reactions";
+
+foamChemistryThermoFile "$FOAM_CASE/constant/thermo.compressibleGas";
 
 
 // ************************************************************************* //

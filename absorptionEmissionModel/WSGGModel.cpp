@@ -51,7 +51,8 @@ Foam::radiation::WSGGModel::WSGGModel
     absorptionEmissionModel(dict, mesh),
     thermo_(mesh.lookupObject<fluidThermo>(basicThermo::dictName)),
     Nq(8),
-    Tref(1200)
+    Tref(1200),
+    w(Nq, 1.0)
 {
     readData();
 }
@@ -136,7 +137,13 @@ Foam::radiation::WSGGModel::aCont(const label bandi = 0) const
         //clear gas
         aFg[0]=1.0-aFg[1]-aFg[2]-aFg[3];
 
-        a[celli]
+        scalar kgw = 0;
+        forAll(kg, point)
+        {
+            kgw += kg[point]*w[point]
+        }
+
+        a[celli] = kgw;
     }
 
     return ta;
@@ -219,7 +226,18 @@ Foam::radiation::WSGGModel::eCont(const label bandi = 0) const
         //clear gas
         aFg[0]=1.0-aFg[1]-aFg[2]-aFg[3];
 
-        e[celli]
+        scalar kgw = 0;
+        forAll(kg, point)
+        {
+            kgw += kg[point]*w[point]
+        }
+        scalar aFgw = 0;
+        forAll(aFg, point)
+        {
+            aFgw += aFg[point]*w[point]
+        }
+
+        e[celli] = kgw*aFgw;
     }
 
     return te;
@@ -255,10 +273,4 @@ void Foam::radiation::WSGGModel::readData()
     dataIn.close();
 
     return;
-}
-
-// * * * * * * * * * * * * * Access Functions * * * * * * * * * * * * * * //
-Foam::scalarList Foam::radiation::WSGGModel::getw()
-{
-    return w;
 }

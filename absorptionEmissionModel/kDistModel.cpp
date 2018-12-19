@@ -515,8 +515,3 @@ Foam::scalar Foam::radiation::kDistModel::fskDh2o(scalar Tg,scalar Tb,scalar k,s
    
   return gcal;
 }
-
-Foam::scalarList Foam::radiation::kDistModel::getw()
-{
-    return w;
-}

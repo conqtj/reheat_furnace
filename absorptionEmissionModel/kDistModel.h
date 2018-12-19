@@ -81,7 +81,6 @@ private:
         scalarList fskdistmix(scalar,scalar,scalar,scalar,const scalarList&,label);
         scalar fskDco2(scalar, scalar, scalar);
         scalar fskDh2o(scalar, scalar, scalar, scalar);
-        scalarList getw();
 
 public:
 

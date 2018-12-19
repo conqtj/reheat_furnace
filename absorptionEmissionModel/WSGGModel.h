@@ -84,8 +84,6 @@ private:
     //functions
         //Read Data
         void readData();
-        //Access Function
-        scalarList getw();
 
 public:
 

@@ -143,7 +143,13 @@ Foam::radiation::kDistModel::aCont(const label bandi = 0) const
         kg=linearInterpMono(nop,g1,*k1,Nq,*g);
         aFg=linearInterpMono(nop,g2,aF2,Nq,*g);
 
-        a[celli]
+        scalar kgw = 0;
+        forAll(kg, point)
+        {
+            kgw += kg[point]*w[point]
+        }
+
+        a[celli] = kgw;
     }
 
     return ta;
@@ -230,7 +236,18 @@ Foam::radiation::kDistModel::eCont(const label bandi = 0) const
         kg=linearInterpMono(nop,g1,*k1,Nq,*g);
         aFg=linearInterpMono(nop,g2,aF2,Nq,*g);
 
-        e[celli]
+        scalar kgw = 0;
+        forAll(kg, point)
+        {
+            kgw += kg[point]*w[point]
+        }
+        scalar aFgw = 0;
+        forAll(aFg, point)
+        {
+            aFgw += aFg[point]*w[point]
+        }
+
+        e[celli] = kgw*aFgw;
     }
 
     return te;

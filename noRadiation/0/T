@@ -1,0 +1,93 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 1150;
+
+boundaryField
+{
+    exhaust
+    {
+        type            zeroGradient;
+    }
+
+    bottomWall
+    {
+        type            codedFixedValue;
+        value           uniform 300.0;
+        
+        redirectType    ebottomWall;
+        
+        codeOptions
+        #{
+            -I$(LIB_SRC)/finiteVolume/lnInclude \
+            -I$(LIB_SRC)/meshTools/lnInclude
+        #};
+        
+        codeInclude
+        #{
+            #include "fvCFD.H"
+            #include <cmath>
+            #include <iostream>
+        #};
+        
+        code
+        #{
+            const fvPatch& boundaryPatch = patch();
+            const vectorField& Cf = boundaryPatch.Cf();
+            scalarField& field = *this;
+            
+            scalar To = 1400, Ti = 300, Tg = 2000, L1 = 16.0;
+            scalar C = log((Tg-Ti)/(Tg-To));
+            
+            forAll(Cf, faceI)
+            {
+              field[faceI] = Tg - (Tg-Ti)*exp(-C*Cf[faceI].x()/L1);
+            }
+        #};
+    }
+
+    sideWalls
+    {
+        type            zeroGradient;
+    }
+
+    topWall
+    {
+	type		zeroGradient;
+    }
+
+    "burnerTile.*"
+    {
+        type            fixedValue;
+        value           uniform 2000.0;
+    }
+
+    "burnerA.*"
+    {
+        type            fixedValue;
+        value           uniform 2000.0;
+    }
+
+    "burnerB.*"
+    {
+		type			fixedValue;
+		value			uniform 2000.0;
+    }
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
